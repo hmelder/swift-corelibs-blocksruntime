@@ -44,8 +44,7 @@ if(_GNU_SOURCE)
   set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS} -D_GNU_SOURCE)
 endif()
 
-# FIXME: This was cargo-culted from libdispatch.  Is it necessary here?
-if(ANDROID)
+if(ANDROID AND "${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64")
   add_link_options("LINKER:-z,max-page-size=16384")
 endif()
 
