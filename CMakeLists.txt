@@ -87,10 +87,10 @@ if(LINKER_SUPPORTS_BUILD_ID)
 endif()
 
 # Public headers to be made available to clients
-set_target_properties(BlocksRuntime
-               PROPERTIES
-	       PUBLIC_HEADER
-	        "src/BlocksRuntime/Block.h;src/BlocksRuntime/Block_private.h")
+set_target_properties(BlocksRuntime PROPERTIES
+  PUBLIC_HEADER
+    src/BlocksRuntime/Block.h
+    src/BlocksRuntime/Block_private.h)
 
 add_library(BlocksRuntime::BlocksRuntime ALIAS BlocksRuntime)
 
@@ -98,7 +98,8 @@ add_library(BlocksRuntime::BlocksRuntime ALIAS BlocksRuntime)
 # Headers go into BlocksRuntime subdir of the usual include location.
 install(TARGETS BlocksRuntime
         EXPORT BlocksRuntime
-	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/BlocksRuntime)
+        PUBLIC_HEADER
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/BlocksRuntime)
 
 # Make it possible to find_package and use this library
 # from the build directory
