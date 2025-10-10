@@ -33,7 +33,7 @@ include(GNUInstallDirs)
 # CMake standard convention for shared library support
 option(BUILD_SHARED_LIBS "build shared libraries" ON)
 
-check_c_compiler_flag(-fmodule-map-file HAVE_FMODULE_MAP_FILE)
+check_c_compiler_flag("-fmodule-map-file=${CMAKE_CURRENT_SOURCE_DIR}/module.modulemap" HAVE_FMODULE_MAP_FILE)
 
 check_linker_flag(C "LINKER:--build-id=sha1" LINKER_SUPPORTS_BUILD_ID)
 
@@ -74,7 +74,7 @@ endif()
 
 # Include a module map file if supported
 if (HAVE_FMODULE_MAP_FILE)
-  target_compile_options(BlocksRuntime
+  target_compile_options(BlocksRuntime PRIVATE
       $<$<COMPILE_LANGUAGE:C,CXX>:-fmodule-map-file=${PROJECT_SOURCE_DIR}/module.modulemap>)
 endif()
 
@@ -87,16 +87,17 @@ if(LINKER_SUPPORTS_BUILD_ID)
 endif()
 
 # Public headers to be made available to clients
-set_target_properties(BlocksRuntime
-               PROPERTIES
-	       PUBLIC_HEADER
-	        "src/BlocksRuntime/Block.h;src/BlocksRuntime/Block_private.h")
+set_target_properties(BlocksRuntime PROPERTIES
+  PUBLIC_HEADER
+    src/BlocksRuntime/Block.h
+    src/BlocksRuntime/Block_private.h)
 
 # Install the library and headers
 # Headers go into BlocksRuntime subdir of the usual include location.
 install(TARGETS BlocksRuntime
         EXPORT BlocksRuntime
-	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/BlocksRuntime)
+        PUBLIC_HEADER
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/BlocksRuntime)
 
 # Make it possible to find_package and use this library
 # from the build directory
