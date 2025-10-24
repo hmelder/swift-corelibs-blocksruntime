@@ -58,7 +58,7 @@ add_library(BlocksRuntime
 
 if(WIN32)
   target_sources(BlocksRuntime PRIVATE
-    BlocksRuntime.def)
+    src/BlocksRuntime/BlocksRuntime.def)
 
   if(NOT BUILD_SHARED_LIBS)
     target_compile_definitions(BlocksRuntime PUBLIC BlocksRuntime_STATIC)
